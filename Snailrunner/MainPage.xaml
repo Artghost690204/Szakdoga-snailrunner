@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
+             x:Class="Snailrunner.MainPage"
+             BackgroundColor="#0D0D11">
+
+    <Grid>
+        <skia:SKCanvasView x:Name="GameCanvas"
+                           PaintSurface="OnCanvasPaintSurface"
+                           HorizontalOptions="Fill"
+                           VerticalOptions="Fill" />
+
+        <VerticalStackLayout x:Name="LobbyMenu"
+                             VerticalOptions="Center"
+                             HorizontalOptions="Center"
+                             Spacing="15">
+            <Label Text="🐌 SNAIL RUNNER 🐌"
+                   FontSize="34"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   HorizontalOptions="Center" />
+            
+            <Label x:Name="LobbyWalletLabel"
+                   Text="Bank: 0 🪙"
+                   TextColor="Gold"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center" />
+            
+            <Button x:Name="StartGameButton"
+                    Text="🏃 ÚJ MENEKÜLÉS INDÍTÁSA"
+                    Clicked="OnStartGameClicked"
+                    BackgroundColor="#007ACC"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    WidthRequest="260"
+                    HeightRequest="50"/>
+
+            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                <Button Text="👤 Karakterek" Clicked="OnCharacterMenuClicked" WidthRequest="125" />
+                <Button Text="🛒 Upgrade Bolt" Clicked="OnShopMenuClicked" WidthRequest="125" />
+            </HorizontalStackLayout>
+            
+        </VerticalStackLayout>
+
+        <Grid x:Name="GameHUD" IsVisible="False">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/> 
+                <RowDefinition Height="*"/>    
+                <RowDefinition Height="Auto"/> 
+            </Grid.RowDefinitions>
+            
+            <Grid Grid.Row="0" Margin="15" ColumnDefinitions="*, Auto">
+                <HorizontalStackLayout Grid.Column="0" Spacing="20" VerticalOptions="Center">
+                    <Label x:Name="HUDCurrencyLabel" Text="🪙 TŐKE/LŐSZER: 0" FontSize="18" TextColor="Gold" FontAttributes="Bold" />
+                </HorizontalStackLayout>
+                
+                <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End" Spacing="10">
+                    <Button x:Name="PauseButton" Text="⏸️ SZÜNET" Clicked="OnPauseClicked" BackgroundColor="#333337" TextColor="White"/>
+                </HorizontalStackLayout>
+            </Grid>
+
+            <Grid Grid.Row="2" Margin="25" ColumnDefinitions="*, *">
+                <Grid Grid.Column="0" HorizontalOptions="Start" VerticalOptions="End"
+                      RowDefinitions="Auto, Auto" ColumnDefinitions="Auto, Auto, Auto" 
+                      RowSpacing="6" ColumnSpacing="6">
+                    <Button Grid.Row="0" Grid.Column="1" Text="▲ W" Pressed="OnJumpPressed" Released="OnJumpReleased" WidthRequest="65" HeightRequest="55" BackgroundColor="#222226" TextColor="White"/>
+                    <Button Grid.Row="1" Grid.Column="0" Text="◀ A" Pressed="OnLeftPressed" Released="OnLeftReleased" WidthRequest="65" HeightRequest="55" BackgroundColor="#222226" TextColor="White"/>
+                    <Button Grid.Row="1" Grid.Column="1" Text="▼ S" Pressed="OnCrouchPressed" Released="OnCrouchReleased" WidthRequest="65" HeightRequest="55" BackgroundColor="#222226" TextColor="White"/>
+                    <Button Grid.Row="1" Grid.Column="2" Text="D ▶" Pressed="OnRightPressed" Released="OnRightReleased" WidthRequest="65" HeightRequest="55" BackgroundColor="#222226" TextColor="White"/>
+                </Grid>
+
+                <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End" VerticalOptions="End">
+                    <Button Text="🔥" Clicked="OnShootClicked" WidthRequest="130" HeightRequest="70" BackgroundColor="#B71C1C" TextColor="White" FontAttributes="Bold" FontSize="16"/>
+                </HorizontalStackLayout>
+            </Grid>
+        </Grid>
+
+        <VerticalStackLayout x:Name="GameOverMenu"
+                             IsVisible="False"
+                             VerticalOptions="Center"
+                             HorizontalOptions="Center"
+                             Spacing="20">
+            <Label Text="MEGHALTÁL!"
+                   FontSize="34"
+                   FontAttributes="Bold"
+                   TextColor="DarkRed"
+                   HorizontalOptions="Center" />
+            
+            <Label Text="Minden vagyonod és fejlesztésed elveszett."
+                   TextColor="White"
+                   FontSize="16"
+                   HorizontalOptions="Center" />
+            
+            <Button Text="🔄 FŐMENÜ (ÚJRAKEZDÉS)"
+                    Clicked="OnExitToLobbyClicked"
+                    BackgroundColor="#007ACC"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    WidthRequest="260"
+                    HeightRequest="50"/>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
